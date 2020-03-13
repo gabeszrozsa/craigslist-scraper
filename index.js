@@ -15,10 +15,17 @@ async function scrapeCraigslist() {
 
       const title = resultTitle.text();
       const url = resultTitle.attr("href");
+      const datePosted = new Date(
+        $(element)
+          .children("time")
+          .attr("datetime")
+      );
 
-      const scrapeResult = { title, url };
+      const scrapeResult = { title, url, datePosted };
       scrapeResults.push(scrapeResult);
     });
+
+    console.log(scrapeResults);
   } catch (error) {
     console.log(error);
   }
