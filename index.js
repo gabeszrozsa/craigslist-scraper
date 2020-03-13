@@ -43,8 +43,13 @@ async function scrapeDescription(jobsWithHeaders) {
       $(".print-qrcode-container").remove();
       const description = $("#postingbody").text();
       const address = $("div.mapaddress").text();
+      const compensation = $(".attrgroup")
+        .children()
+        .first()
+        .text()
+        .replace("compensation: ", "");
 
-      return { ...job, description, address };
+      return { ...job, description, address, compensation };
     })
   );
 }
