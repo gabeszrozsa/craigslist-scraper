@@ -15,11 +15,9 @@ async function scrapeJobHeader() {
 
       const title = resultTitle.text();
       const url = resultTitle.attr("href");
-      const datePosted = new Date(
-        $(element)
-          .children("time")
-          .attr("datetime")
-      );
+      const datePosted = $(element)
+        .children("time")
+        .attr("datetime");
       const hood = $(element)
         .find(".result-hood")
         .text();
@@ -54,10 +52,18 @@ async function scrapeDescription(jobsWithHeaders) {
   );
 }
 
+async function createCsvFile(data) {
+  const csv = new ObjectsToCsv(data);
+
+  // Save to file:
+  await csv.toDisk("./data.csv");
+}
+
 async function scrapeCraigslist() {
   const jobsWithHeaders = await scrapeJobHeader();
   const jobsFullData = await scrapeDescription(jobsWithHeaders);
-  console.log(jobsFullData);
+
+  await createCsvFile(jobsFullData);
 }
 
 scrapeCraigslist();
